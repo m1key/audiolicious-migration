@@ -1,17 +1,22 @@
 package me.m1key.audioliciousmigration
 import com.google.inject.Guice
+import me.m1key.audioliciousmigration.persistence.PersistenceProvider
 
 object Launcher {
 
   def main(args: Array[String]): Unit = {
     println("Audiolicious Importer")
     
+    val injector = Guice.createInjector(new AudioliciousMigrationModule)
+    val importer = injector.getInstance(classOf[AudioliciousImporter])
+    val persistenceProvider = injector.getInstance(classOf[PersistenceProvider])
+    
+    persistenceProvider.initialise
     val libraryUuid = resolveLibraryUuid(args)
     println("Migrating library [%s].".format(libraryUuid))
     
-    val injector = Guice.createInjector(new AudioliciousMigrationModule)
-    val importer = injector.getInstance(classOf[AudioliciousImporter])
     importer.importLibrary("UUID")
+    persistenceProvider.close
     
     println("Bye.")
   }

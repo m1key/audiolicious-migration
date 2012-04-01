@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0"
+	xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+
+	<persistence-unit name="audioliciousPu">
+		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+
+		<class>me.m1key.audiolicious.domain.entities.Library</class>
+		<class>me.m1key.audiolicious.domain.entities.Artist</class>
+		<class>me.m1key.audiolicious.domain.entities.Album</class>
+		<class>me.m1key.audiolicious.domain.entities.Song</class>
+		<class>me.m1key.audiolicious.domain.entities.Stat</class>
+		<class>me.m1key.audiolicious.domain.entities.Rating</class>
+
+		<properties>
+			<property name="eclipselink.jdbc.driver" value="com.mysql.jdbc.Driver" />
+			<property name="eclipselink.jdbc.url"
+				value="jdbc:mysql://localhost:3306/audiolicious_test" />
+			<property name="eclipselink.jdbc.user" value="root" />
+			<property name="eclipselink.jdbc.password" value="" />
+			<property name="eclipselink.target-database" value="MYSQL" />
+			<property name="eclipselink.logging.level" value="OFF" />
+			<property name="eclipselink.orm.throw.exceptions" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>
