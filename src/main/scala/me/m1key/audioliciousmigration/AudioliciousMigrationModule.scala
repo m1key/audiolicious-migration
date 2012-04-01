@@ -9,6 +9,8 @@ import me.m1key.audioliciousmigration.exporter.MongoDbExporter
 import me.m1key.audioliciousmigration.persistence.PersistenceProvider
 import me.m1key.audioliciousmigration.persistence.JpaPersistenceProvider
 import com.google.inject.Scopes
+import me.m1key.audioliciousmigration.repository.LibraryRepository
+import me.m1key.audioliciousmigration.repository.PersistenceLibraryRepository
 
 class AudioliciousMigrationModule extends AbstractModule {
 
@@ -18,6 +20,7 @@ class AudioliciousMigrationModule extends AbstractModule {
     bind(classOf[Feeder]).to(classOf[DefaultFeeder])
     bind(classOf[Exporter]).to(classOf[MongoDbExporter])
     bind(classOf[PersistenceProvider]).to(classOf[JpaPersistenceProvider]).in(Scopes.SINGLETON)
+    bind(classOf[LibraryRepository]).to(classOf[PersistenceLibraryRepository]).in(Scopes.SINGLETON)
   }
 
 } 
