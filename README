@@ -4,3 +4,9 @@ by Michal Huniewicz
 www.m1key.me
 
 The goal of this project is to migrate relational Audiolicious data to NoSQL.
+
+To build this project you need to have Audiolicious artifacts in your repository.
+You can obtain the source code here: https://github.com/m1key/audiolicious
+
+To run integration tests you need Audiolicious database which Audiolicious
+integration tests create when they run.
