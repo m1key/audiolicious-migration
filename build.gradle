@@ -17,6 +17,12 @@ jar {
 	}
 }
 
+test { exclude "**/*IT.class" }
+
+task integrationTest(type: Test, dependsOn: testClasses) { include "**/*IT.class" }
+
+check.dependsOn integrationTest
+
 repositories {
 	mavenLocal()
 	mavenCentral()

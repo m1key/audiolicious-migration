@@ -8,7 +8,7 @@ import me.m1key.audiolicious.domain.entities.Library
 import java.util.Date
 
 @RunWith(classOf[JUnitSuiteRunner])
-class PersistenceLibraryRepositorySpec extends Specification with JUnit {
+class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
 
   val jpaPersistenceProvider = new JpaPersistenceProvider
   jpaPersistenceProvider.initialise
