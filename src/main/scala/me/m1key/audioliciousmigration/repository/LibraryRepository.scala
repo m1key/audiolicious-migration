@@ -3,7 +3,7 @@ import me.m1key.audiolicious.domain.entities.Library
 
 trait LibraryRepository {
 
-  def getLibrary(libraryUuid: String): Library
-  def getLatestLibrary: Library
+  def getLibrary(libraryUuid: String): Option[Library]
+  def getLatestLibrary: Option[Library]
 
 }

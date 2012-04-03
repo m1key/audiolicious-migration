@@ -28,9 +28,9 @@ class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
       println("Test prepared. Libraries: %d".format(librariesCount))
     }
 
-    "throw an exxception." in {
+    "return None." in {
       entityManager.getTransaction().begin()
-      repository.getLatestLibrary() must throwA[RuntimeException]
+      repository.getLatestLibrary() mustBe None
       entityManager.getTransaction().commit()
     }
 
@@ -53,7 +53,7 @@ class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
 
     "equal the only library." in {
       entityManager.getTransaction().begin()
-      val latestLibrary = repository.getLatestLibrary()
+      val latestLibrary = repository.getLatestLibrary().get
       entityManager.getTransaction().commit()
       latestLibrary mustBe library
     }
@@ -84,7 +84,7 @@ class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
 
     "equal the newer library." in {
       entityManager.getTransaction().begin()
-      val latestLibrary = repository.getLatestLibrary()
+      val latestLibrary = repository.getLatestLibrary().get
       entityManager.getTransaction().commit()
       println("	Latest library: [%s]".format(latestLibrary))
       latestLibrary mustBe newerLibrary
@@ -92,14 +92,14 @@ class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
 
     "not equal an older library 1." in {
       entityManager.getTransaction().begin()
-      val latestLibrary = repository.getLatestLibrary()
+      val latestLibrary = repository.getLatestLibrary().get
       entityManager.getTransaction().commit()
       latestLibrary mustNotBe olderLibrary
     }
 
     "not equal an older library 2." in {
       entityManager.getTransaction().begin()
-      val latestLibrary = repository.getLatestLibrary()
+      val latestLibrary = repository.getLatestLibrary().get
       entityManager.getTransaction().commit()
       latestLibrary mustNotBe anotherOlderLibrary
     }
@@ -120,7 +120,7 @@ class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
 
     "throw an exxception." in {
       entityManager.getTransaction().begin()
-      repository.getLibrary("x") must throwA[RuntimeException]
+      repository.getLibrary("x") mustBe None
       entityManager.getTransaction().commit()
     }
 
@@ -150,21 +150,21 @@ class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
 
     "return correct 1st library." in {
       entityManager.getTransaction().begin()
-      val library = repository.getLibrary(olderLibrary.getUuid)
+      val library = repository.getLibrary(olderLibrary.getUuid).get
       entityManager.getTransaction().commit()
       library mustBe olderLibrary
     }
 
     "return correct 2nd library." in {
       entityManager.getTransaction().begin()
-      val library = repository.getLibrary(anotherOlderLibrary.getUuid)
+      val library = repository.getLibrary(anotherOlderLibrary.getUuid).get
       entityManager.getTransaction().commit()
       library mustBe anotherOlderLibrary
     }
 
     "return correct 3rd library." in {
       entityManager.getTransaction().begin()
-      val library = repository.getLibrary(newerLibrary.getUuid)
+      val library = repository.getLibrary(newerLibrary.getUuid).get
       entityManager.getTransaction().commit()
       library mustBe newerLibrary
     }

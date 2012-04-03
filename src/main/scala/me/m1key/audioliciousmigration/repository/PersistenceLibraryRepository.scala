@@ -7,31 +7,46 @@ import javax.persistence.EntityManager
 
 class PersistenceLibraryRepository @Inject() (private val persistenceProvider: PersistenceProvider) extends LibraryRepository {
 
-  def getLibrary(libraryUuid: String): Library = {
+  @Override
+  def getLibrary(libraryUuid: String): Option[Library] = {
     val entityManager = persistenceProvider.getEntityManager
 
-    verifyLibrariesExist(entityManager)
-    val library: Library = entityManager.createQuery("SELECT l FROM Library l WHERE l.uuid = :uuid", classOf[Library]).setParameter("uuid", libraryUuid).getSingleResult()
-    return library
+    if (libraryExists(entityManager, libraryUuid)) {
+      val library: Library = entityManager.createQuery("SELECT l FROM Library l WHERE l.uuid = :uuid", classOf[Library]).setParameter("uuid", libraryUuid).getSingleResult()
+      return Some(library)
+    } else {
+      return None
+    }
   }
 
-  def getLatestLibrary(): Library = {
+  @Override
+  def getLatestLibrary(): Option[Library] = {
     val entityManager = persistenceProvider.getEntityManager
 
-    verifyLibrariesExist(entityManager)
-    val library: Library = entityManager.createQuery("SELECT l FROM Library l ORDER BY l.dateAdded DESC", classOf[Library]).setMaxResults(1).getSingleResult()
-    return library
+    if (anyLibrariesExist(entityManager)) {
+      val library: Library = entityManager.createQuery("SELECT l FROM Library l ORDER BY l.dateAdded DESC", classOf[Library]).setMaxResults(1).getSingleResult()
+      return Some(library)
+    } else {
+      return None
+    }
   }
 
-  private def verifyLibrariesExist(entityManager: EntityManager): Unit = {
+  private def anyLibrariesExist(entityManager: EntityManager): Boolean = {
     val sql = "SELECT l FROM Library l"
     val query = entityManager.createQuery(sql);
     query.setMaxResults(1);
     val result = query.getResultList()
 
-    if (result.size() == 0) {
-      throw new RuntimeException("There are no libraries in the database.")
-    }
+    return result.size() > 0
+  }
+
+  private def libraryExists(entityManager: EntityManager, libraryUuid: String): Boolean = {
+    val sql = "SELECT l FROM Library l WHERE l.uuid = :uuid"
+    val query = entityManager.createQuery(sql).setParameter("uuid", libraryUuid);
+    query.setMaxResults(1);
+    val result = query.getResultList()
+
+    return result.size() > 0
   }
 
 }

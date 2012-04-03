@@ -33,10 +33,16 @@ object Launcher {
     if (args.length > 0) {
       val libraryUuid = args(0)
       println("Library UUID specified. Obtaining library [%s]...".format(libraryUuid))
-      return libraryRepository.getLibrary(libraryUuid)
+      libraryRepository.getLibrary(libraryUuid) match {
+        case Some(library) => return library
+        case None => throw new RuntimeException("Library [%s] not found.".format(libraryUuid))
+      }
     } else {
       println("Library UUID not specified. Obtaining most recent library...")
-      return libraryRepository.getLatestLibrary
+      libraryRepository.getLatestLibrary match {
+        case Some(library) => return library
+        case None => throw new RuntimeException("There are no libraries in the database.")
+      }
     }
   }
 

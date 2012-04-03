@@ -23,4 +23,4 @@ class AudioliciousMigrationModule extends AbstractModule {
     bind(classOf[LibraryRepository]).to(classOf[PersistenceLibraryRepository]).in(Scopes.SINGLETON)
   }
 
-} 
+}
