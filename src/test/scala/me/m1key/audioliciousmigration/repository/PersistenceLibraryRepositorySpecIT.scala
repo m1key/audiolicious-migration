@@ -118,7 +118,7 @@ class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
       println("Test prepared. Libraries: %d".format(librariesCount))
     }
 
-    "throw an exxception." in {
+    "return None." in {
       entityManager.getTransaction().begin()
       repository.getLibrary("x") mustBe None
       entityManager.getTransaction().commit()
@@ -200,7 +200,7 @@ class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
 
   private def librariesCount: Int = {
     entityManager.getTransaction().begin()
-    val count = entityManager.createQuery("SELECT l FROM Library l ORDER BY l.dateAdded DESC", classOf[Library]).getResultList().size()
+    val count = entityManager.createQuery("SELECT l FROM Library l", classOf[Library]).getResultList().size()
     entityManager.getTransaction().commit()
     return count
   }

@@ -1,9 +1,9 @@
 package me.m1key.audioliciousmigration.feeder
 
-import me.m1key.audiolicious.domain.entities.Artist
+import me.m1key.audiolicious.domain.entities.Library
 
 trait Feeder {
-  
-  def feed(artist: Artist): Unit
+
+  def feed(library: Library): Unit
 
 }
