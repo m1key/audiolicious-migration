@@ -2,10 +2,10 @@ package me.m1key.audioliciousmigration.repository
 
 import me.m1key.audiolicious.domain.entities.Library
 import com.google.inject.Inject
-import me.m1key.audioliciousmigration.persistence.PersistenceProvider
+import me.m1key.audioliciousmigration.persistence.AudioliciousPersistenceProvider
 import javax.persistence.EntityManager
 
-class PersistenceLibraryRepository @Inject() (private val persistenceProvider: PersistenceProvider) extends LibraryRepository {
+class PersistenceLibraryRepository @Inject() (private val persistenceProvider: AudioliciousPersistenceProvider) extends LibraryRepository {
 
   @Override
   def getLibrary(libraryUuid: String): Option[Library] = {

@@ -1,7 +1,7 @@
 package me.m1key.audioliciousmigration.persistence
 import javax.persistence.EntityManager
 
-trait PersistenceProvider {
+trait AudioliciousPersistenceProvider {
   
   def initialise: Unit
   def getEntityManager: EntityManager

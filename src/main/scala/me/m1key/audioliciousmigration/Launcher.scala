@@ -1,6 +1,6 @@
 package me.m1key.audioliciousmigration
 import com.google.inject.Guice
-import me.m1key.audioliciousmigration.persistence.PersistenceProvider
+import me.m1key.audioliciousmigration.persistence.AudioliciousPersistenceProvider
 import me.m1key.audiolicious.domain.entities.Library
 import com.google.inject.Injector
 import me.m1key.audioliciousmigration.repository.LibraryRepository
@@ -12,7 +12,7 @@ object Launcher {
 
     val injector = Guice.createInjector(new AudioliciousMigrationModule)
     val importer = injector.getInstance(classOf[AudioliciousImporter])
-    val persistenceProvider = injector.getInstance(classOf[PersistenceProvider])
+    val persistenceProvider = injector.getInstance(classOf[AudioliciousPersistenceProvider])
     val libraryRepository = injector.getInstance(classOf[LibraryRepository])
 
     persistenceProvider.initialise

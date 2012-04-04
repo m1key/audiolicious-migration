@@ -3,7 +3,7 @@ import javax.persistence.EntityManager
 import javax.persistence.EntityManagerFactory
 import javax.persistence.Persistence
 
-class JpaPersistenceProvider extends PersistenceProvider {
+class JpaPersistenceProvider extends AudioliciousPersistenceProvider {
 
   private var factory: EntityManagerFactory = _
   private var entityManager: EntityManager = _
