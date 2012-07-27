@@ -4,7 +4,6 @@ import com.google.inject.Provides
 import me.m1key.audioliciousmigration.importer.RelativeDataImporter
 import me.m1key.audioliciousmigration.feeder.Feeder
 import me.m1key.audioliciousmigration.feeder.MongoDbFeeder
-import me.m1key.audioliciousmigration.exporter.Exporter
 import me.m1key.audioliciousmigration.exporter.MongoDbExporter
 import me.m1key.audioliciousmigration.persistence.AudioliciousPersistenceProvider
 import me.m1key.audioliciousmigration.persistence.JpaPersistenceProvider
@@ -20,12 +19,12 @@ class AudioliciousMigrationModule extends AbstractModule {
   protected def configure() {
     bind(classOf[AudioliciousImporter]).to(classOf[RelativeDataImporter])
     bind(classOf[Feeder]).to(classOf[MongoDbFeeder])
-    bind(classOf[Exporter]).to(classOf[MongoDbExporter])
 
     bind(classOf[AudioliciousPersistenceProvider]).to(classOf[JpaPersistenceProvider]).in(Scopes.SINGLETON)
     bind(classOf[LibraryRepository]).to(classOf[PersistenceLibraryRepository]).in(Scopes.SINGLETON)
     bind(classOf[MorphiaMongoDbPersistenceProvider]).in(Scopes.SINGLETON)
     bind(classOf[MorphiaMongoDbRepository]).in(Scopes.SINGLETON)
+    bind(classOf[MongoDbExporter]).in(Scopes.SINGLETON)
   }
 
 }

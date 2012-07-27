@@ -5,8 +5,6 @@ import me.m1key.audiolicious.domain.entities.Library
 import com.google.inject.Injector
 import me.m1key.audioliciousmigration.repository.LibraryRepository
 import me.m1key.audioliciousmigration.persistence.mongodb.MorphiaMongoDbPersistenceProvider
-import me.m1key.audioliciousmigration.repository.MorphiaMongoDbRepository
-import me.m1key.audioliciousmigration.entities.mongodb.MongoDbLibrary
 
 object Launcher {
 
@@ -18,7 +16,6 @@ object Launcher {
     val persistenceProvider = injector.getInstance(classOf[AudioliciousPersistenceProvider])
     val libraryRepository = injector.getInstance(classOf[LibraryRepository])
     val mongoDbPersistence = injector.getInstance(classOf[MorphiaMongoDbPersistenceProvider])
-    val mongoDbRepository = injector.getInstance(classOf[MorphiaMongoDbRepository])
 
     persistenceProvider.initialise
     val entityManager = persistenceProvider.getEntityManager
@@ -29,10 +26,6 @@ object Launcher {
     val library = resolveLibrary(libraryRepository, args)
     println("Migrating library [%s].".format(library.getUuid()))
     importer.importLibrary(library.getUuid)
-
-    val mongoDbLibrary = new MongoDbLibrary
-    mongoDbLibrary.uuid = library.getUuid()
-    mongoDbRepository.save(mongoDbLibrary)
 
     entityManager.getTransaction().commit
     persistenceProvider.close
