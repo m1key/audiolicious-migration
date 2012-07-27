@@ -183,6 +183,7 @@ class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
   private def deleteLibraries = {
     println("	Deleting libraries...")
     entityManager.getTransaction().begin()
+    entityManager.createQuery("DELETE FROM Stat").executeUpdate()
     entityManager.createQuery("DELETE FROM Library").executeUpdate()
     entityManager.getTransaction().commit()
     println("	Libraries deleted.")
