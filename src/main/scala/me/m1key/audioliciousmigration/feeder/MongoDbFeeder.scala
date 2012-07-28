@@ -4,13 +4,19 @@ import me.m1key.audiolicious.domain.entities.Library
 import com.google.inject.Inject
 import me.m1key.audioliciousmigration.exporter.MongoDbExporter
 import me.m1key.audioliciousmigration.entities.mongodb.MongoDbLibrary
+import me.m1key.audioliciousmigration.repository.SongRepository
 
-private[audioliciousmigration] class MongoDbFeeder @Inject() (private val exporter: MongoDbExporter) extends Feeder {
+private[audioliciousmigration] class MongoDbFeeder @Inject() (private val exporter: MongoDbExporter, private val songRepository: SongRepository) extends Feeder {
 
   def feed(library: Library): Unit = {
     val mongoDbLibrary = new MongoDbLibrary
     mongoDbLibrary.uuid = library.getUuid()
     println("Created MongoDb library [%s].".format(mongoDbLibrary.uuid));
+    val songs = songRepository.getAllSongsWithStatsByLibraryUuid(mongoDbLibrary.uuid);
+    println("Obtained [%d] songs.".format(songs.size))
+    for (song <- songs) {
+      mongoDbLibrary.addArtist(song.artistName)
+    }
     exporter.export(mongoDbLibrary)
   }
 
