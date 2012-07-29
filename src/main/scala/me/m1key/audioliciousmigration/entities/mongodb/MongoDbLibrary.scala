@@ -5,6 +5,7 @@ import com.google.code.morphia.annotations.Id
 import org.bson.types.ObjectId
 import java.util.HashSet
 import java.util.Set
+import com.google.code.morphia.annotations.Embedded
 
 @Entity
 class MongoDbLibrary {
@@ -12,10 +13,11 @@ class MongoDbLibrary {
   var id: ObjectId = _
 
   var uuid: String = _
-  
-  var artists: Set[String] = new HashSet[String]
-  
-  def addArtist(artistName: String): Unit = {
-    artists.add(artistName)
+
+  @Embedded
+  val artists: Set[MongoDbArtist] = new HashSet[MongoDbArtist]
+
+  def addArtist(artist: MongoDbArtist): Unit = {
+    artists.add(artist)
   }
 }
