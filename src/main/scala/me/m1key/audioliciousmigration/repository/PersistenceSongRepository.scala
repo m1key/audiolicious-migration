@@ -8,7 +8,7 @@ import scala.collection.mutable.MutableList
 
 class PersistenceSongRepository @Inject() (private val persistenceProvider: AudioliciousPersistenceProvider) extends SongRepository {
 
-  def getAllSongsWithStatsByLibraryUuid(libraryUuid: String): Collection[SongTo] = {
+  def getAllSongsWithStatsByLibraryUuid(libraryUuid: String): Iterable[SongTo] = {
     val entityManager = persistenceProvider.getEntityManager
     val songs = entityManager.createNativeQuery("select st.PLAY_COUNT, st.PERCENTAGE, st.SKIP_COUNT, st.SONG_UUID, " +
       "so.NAME, so.GENRE, so.YEAR, so.ARTIST_NAME, al.NAME, ar.NAME " +

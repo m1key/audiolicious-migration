@@ -3,6 +3,6 @@ import me.m1key.audioliciousmigration.to.SongTo
 
 trait SongRepository {
 
-  def getAllSongsWithStatsByLibraryUuid(libraryUuid: String): Collection[SongTo]
+  def getAllSongsWithStatsByLibraryUuid(libraryUuid: String): Iterable[SongTo]
 
 }
