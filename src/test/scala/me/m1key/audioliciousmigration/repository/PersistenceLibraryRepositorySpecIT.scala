@@ -6,14 +6,16 @@ import org.junit.runner.RunWith
 import me.m1key.audioliciousmigration.persistence.JpaPersistenceProvider
 import me.m1key.audiolicious.domain.entities.Library
 import java.util.Date
+import javax.persistence.Persistence
 
 @RunWith(classOf[JUnitSuiteRunner])
 class PersistenceLibraryRepositorySpecIT extends Specification with JUnit {
 
-  val jpaPersistenceProvider = new JpaPersistenceProvider
+  val factory = Persistence.createEntityManagerFactory("audioliciousPuTest")
+  val entityManager = factory.createEntityManager();
+  val jpaPersistenceProvider = new TestJpaPersistenceProvider(entityManager, factory)
   jpaPersistenceProvider.initialise
   val repository = new PersistenceLibraryRepository(jpaPersistenceProvider)
-  val entityManager = jpaPersistenceProvider.getEntityManager
 
   doBeforeSpec {
     deleteLibraries
