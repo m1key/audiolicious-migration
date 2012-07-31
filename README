@@ -10,3 +10,7 @@ You can obtain the source code here: https://github.com/m1key/audiolicious
 
 To run integration tests you need Audiolicious database which Audiolicious
 integration tests create when they run.
+
+
+When running Launcher from SpringSource Tool Suite, I had to manually adjust
+the classpath to include src/main/resources.
