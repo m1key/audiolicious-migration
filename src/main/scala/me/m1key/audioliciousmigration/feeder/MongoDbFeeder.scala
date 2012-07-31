@@ -6,6 +6,7 @@ import me.m1key.audioliciousmigration.exporter.MongoDbExporter
 import me.m1key.audioliciousmigration.entities.mongodb.MongoDbLibrary
 import me.m1key.audioliciousmigration.repository.SongRepository
 import me.m1key.audioliciousmigration.entities.mongodb.MongoDbArtist
+import me.m1key.audioliciousmigration.entities.mongodb.MongoDbAlbum
 
 private[audioliciousmigration] class MongoDbFeeder @Inject() (private val exporter: MongoDbExporter, private val songRepository: SongRepository) extends Feeder {
 
@@ -16,7 +17,7 @@ private[audioliciousmigration] class MongoDbFeeder @Inject() (private val export
     val songs = songRepository.getAllSongsWithStatsByLibraryUuid(mongoDbLibrary.uuid);
     println("Obtained [%d] songs.".format(songs.size))
     for (song <- songs) {
-      mongoDbLibrary.addArtist(new MongoDbArtist(song.artistName))
+      mongoDbLibrary.addArtist(new MongoDbArtist(song.artistName)).addAlbum(new MongoDbAlbum(song.albumName))
     }
     exporter.export(mongoDbLibrary)
   }

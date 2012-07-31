@@ -17,7 +17,19 @@ class MongoDbLibrary {
   @Embedded
   val artists: Set[MongoDbArtist] = new HashSet[MongoDbArtist]
 
-  def addArtist(artist: MongoDbArtist): Unit = {
-    artists.add(artist)
+  def addArtist(artist: MongoDbArtist): MongoDbArtist = {
+    val added = artists.add(artist)
+    if (added) {
+      return artist
+    } else {
+      val iterator = artists.iterator()
+      while (iterator.hasNext()) {
+        val currentArtist = iterator.next();
+        if (currentArtist == artist) {
+          return currentArtist
+        }
+      }
+      throw new RuntimeException("Artist [%s] added but not found...?".format(artist.name))
+    }
   }
 }
