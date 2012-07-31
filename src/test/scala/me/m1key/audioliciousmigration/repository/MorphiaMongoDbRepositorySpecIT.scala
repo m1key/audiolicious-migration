@@ -3,13 +3,12 @@ import org.specs.Specification
 import org.specs.runner.JUnit
 import org.junit.runner.RunWith
 import org.specs.runner.JUnitSuiteRunner
-import me.m1key.audioliciousmigration.persistence.mongodb.MorphiaMongoDbPersistenceProvider
 import me.m1key.audioliciousmigration.entities.mongodb.MongoDbLibrary
 
 @RunWith(classOf[JUnitSuiteRunner])
 class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
 
-  val morphiaPersistenceProvider = new MorphiaMongoDbPersistenceProvider
+  val morphiaPersistenceProvider = new TestMorphiaMongoDbPersistenceProvider
   morphiaPersistenceProvider.initialise
   val repository = new MorphiaMongoDbRepository(morphiaPersistenceProvider)
   val datastore = morphiaPersistenceProvider.getDatastore()
