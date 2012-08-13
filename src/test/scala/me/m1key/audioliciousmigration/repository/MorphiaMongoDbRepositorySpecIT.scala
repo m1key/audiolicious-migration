@@ -3,6 +3,7 @@ import org.specs.Specification
 import org.specs.runner.JUnit
 import org.junit.runner.RunWith
 import org.specs.runner.JUnitSuiteRunner
+import me.m1key.audioliciousmigration.entities.mongodb.MongoDbSong
 
 @RunWith(classOf[JUnitSuiteRunner])
 class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
@@ -25,11 +26,9 @@ class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
 
     "increase the number of rows by one." in {
       songsCount mustBe 0
-      // TODO song
-//      val library = new MongoDbLibrary
-//      library.uuid = "Test UUID"
-//      repository.save(library)
-//      librariesCount mustBe 1
+      val song = new MongoDbSong
+      repository.save(song)
+      songsCount mustBe 1
     }
 
     doLast {
@@ -41,15 +40,12 @@ class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
 
   private def deleteSongs = {
     println("	Deleting songs...")
-    // TODO song
-//    datastore.delete(datastore.createQuery(classOf[MongoDbLibrary]))
+    datastore.delete(datastore.createQuery(classOf[MongoDbSong]))
     println("	Songs deleted.")
   }
 
   private def songsCount: Int = {
-    // TODO song
-    return 0
-//    return datastore.createQuery(classOf[MongoDbLibrary]).countAll().toInt
+    return datastore.createQuery(classOf[MongoDbSong]).countAll().toInt
   }
 
 }
