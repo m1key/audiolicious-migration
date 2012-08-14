@@ -12,6 +12,10 @@ class MongoDbSong(val name: String, val albumName: String, val artistName: Strin
   @Id
   var id: ObjectId = _
   
+  var genre: String = _
+  var year: Int = _
+  var songArtistName: String = _
+  
   override def equals(that: Any) = {
     that match {
       case that: MongoDbSong => that.name == this.name &&
