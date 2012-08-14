@@ -8,12 +8,15 @@ import java.text.NumberFormat
 import java.text.ParsePosition
 import java.util.Locale
 
-class SongPerArtistMining @Inject() (private val persistenceProvider: MorphiaMongoDbPersistenceProvider) {
+class AlbumsPerArtistMining @Inject() (private val persistenceProvider: MorphiaMongoDbPersistenceProvider) {
 
-  private val query = "db.MongoDbSong.group("+
-	"{key: {artistName: true},"+
-	"initial: {totalSongs: 0},"+
-	"reduce: function(obj, prev) { prev.totalSongs++;}"+
+  // This is a hack.
+  // It won't allow two statements in the reduce call.
+  // Therefore the totalAlbums++ one has to be used in the if statement.
+  private val query = "db.MongoDbSong.group(" +
+	"{key: {artistName: true}," +
+	"initial: {totalAlbums: 0, albums: {}}," +
+	"reduce: function(obj, prev) { if(prev.albums[obj.albumName] == null && prev.totalAlbums++ > 0){prev.albums[obj.albumName]=true;}}" +
 	"})";
   
   private val formatter = NumberFormat.getInstance(Locale.ENGLISH)
@@ -49,7 +52,7 @@ class SongPerArtistMining @Inject() (private val persistenceProvider: MorphiaMon
   
   private def processResult(dbObject: BasicDBObject): (String, Int) = {
     val artistName = dbObject.get("artistName").toString()
-    val totalSongs = parseDouble(dbObject.get("totalSongs").toString(), formatter).intValue()
+    val totalSongs = parseDouble(dbObject.get("totalAlbums").toString(), formatter).intValue()
     return (artistName, totalSongs)
   }
 

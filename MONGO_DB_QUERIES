@@ -14,3 +14,12 @@ db.MongoDbSong.group(
 	initial: {totalSongs: 0},
 	$reduce: function(obj, prev) { prev.totalSongs++;}
 }
+
+
+2. Number of album by artist.
+
+db.MongoDbSong.group(
+	{key: {artistName: true},
+	initial: {totalAlbums: 0, albums: {}},
+	reduce: function(obj, prev) { if(prev.albums[obj.albumName] == null){prev.albums[obj.albumName]=true;prev.totalAlbums++;}}
+})

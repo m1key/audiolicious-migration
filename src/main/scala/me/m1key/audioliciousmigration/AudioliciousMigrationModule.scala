@@ -17,6 +17,7 @@ import me.m1key.audioliciousmigration.repository.PersistenceSongRepository
 import me.m1key.audioliciousmigration.persistence.mongodb.ProductionMorphiaMongoDbPersistenceProvider
 import me.m1key.audioliciousmigration.mining.SongPerArtistMining
 import me.m1key.audioliciousmigration.mining.SongPerYearMining
+import me.m1key.audioliciousmigration.mining.AlbumsPerArtistMining
 
 class AudioliciousMigrationModule extends AbstractModule {
 
@@ -34,6 +35,7 @@ class AudioliciousMigrationModule extends AbstractModule {
     
     bind(classOf[SongPerArtistMining]).in(Scopes.SINGLETON)
     bind(classOf[SongPerYearMining]).in(Scopes.SINGLETON)
+    bind(classOf[AlbumsPerArtistMining]).in(Scopes.SINGLETON)
   }
 
 }

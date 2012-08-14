@@ -24,7 +24,7 @@ class SongPerYearMining @Inject() (private val persistenceProvider: MorphiaMongo
     val result = mongo.getDB("audiolicious").eval(query)
     result match {
       case list: BasicDBList => return Some(processAndRetrieveResults(list, maxResults, compareSecondValueIntegerTopBottom))
-      case _ => println("Error while obtaining stats. Result of unknown type [%s].".format(result.getClass()))
+      case _ => println("Error while obtaining stats. Result of unknown type [%s].".format(result))
       	return None;
     }
   }
