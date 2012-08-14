@@ -4,6 +4,7 @@ import org.specs.runner.JUnit
 import org.junit.runner.RunWith
 import org.specs.runner.JUnitSuiteRunner
 import me.m1key.audioliciousmigration.entities.mongodb.MongoDbSong
+import com.mongodb.MongoException
 
 @RunWith(classOf[JUnitSuiteRunner])
 class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
@@ -27,8 +28,45 @@ class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
     "increase the number of rows by one." in {
       songsCount mustBe 0
       val song = new MongoDbSong
+      song.name = "Heathen Child"
       repository.save(song)
       songsCount mustBe 1
+    }
+
+    doLast {
+      println("Cleaning up...")
+      deleteSongs
+      println("Cleaned up. Songs: %d".format(songsCount))
+    }
+  }
+
+  "Creating two songs" should {
+    doBefore {
+      println("Preparing test 2...")
+      deleteSongs
+      println("Test prepared. Songs: %d".format(songsCount))
+    }
+
+    "increase the number of rows by two." in {
+      songsCount mustBe 0
+      val song1 = new MongoDbSong
+      song1.name = "Heathen Child"
+      repository.save(song1)
+      val song2 = new MongoDbSong
+      song2.name = "Worm Tamer"
+      repository.save(song2)
+      songsCount mustBe 2
+    }
+
+    "fail if duplicate song is inserted." in {
+      songsCount mustBe 0
+      val song1 = new MongoDbSong
+      song1.name = "When My Baby Comes"
+      repository.save(song1)
+      val song2 = new MongoDbSong
+      song2.name = "When My Baby Comes"
+      song1 mustEqual song2
+      repository.save(song2) must throwA[MongoException]
     }
 
     doLast {

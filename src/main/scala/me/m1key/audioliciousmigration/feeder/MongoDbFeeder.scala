@@ -13,6 +13,7 @@ private[audioliciousmigration] class MongoDbFeeder @Inject() (private val export
     println("Obtained [%d] songs.".format(songs.size))
     for (song <- songs) {
       val mongoDbSong = new MongoDbSong
+      mongoDbSong.name = song.songName
       //mongoDbLibrary.addArtist(new MongoDbArtist(song.artistName)).addAlbum(new MongoDbAlbum(song.albumName))
       exporter.export(mongoDbSong)
     }
