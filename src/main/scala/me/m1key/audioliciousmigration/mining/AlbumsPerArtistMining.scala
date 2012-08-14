@@ -16,7 +16,7 @@ class AlbumsPerArtistMining @Inject() (private val persistenceProvider: MorphiaM
   private val query = "db.MongoDbSong.group(" +
 	"{key: {artistName: true}," +
 	"initial: {totalAlbums: 0, albums: {}}," +
-	"reduce: function(obj, prev) { if(prev.albums[obj.albumName] == null && prev.totalAlbums++ > 0){prev.albums[obj.albumName]=true;}}" +
+	"reduce: function(obj, prev) { if(prev.albums[obj.albumName] == null && ++prev.totalAlbums > 0){prev.albums[obj.albumName]=true;}}" +
 	"})";
   
   private val formatter = NumberFormat.getInstance(Locale.ENGLISH)
