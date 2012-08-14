@@ -21,6 +21,7 @@ import me.m1key.audioliciousmigration.mining.AlbumsPerArtistMining
 import me.m1key.audioliciousmigration.mining.AlbumsPerGenreMining
 import me.m1key.audioliciousmigration.mining.ArtistCountMining
 import me.m1key.audioliciousmigration.mining.SongCountMining
+import me.m1key.audioliciousmigration.mining.AlbumCountMining
 
 class AudioliciousMigrationModule extends AbstractModule {
 
@@ -41,6 +42,7 @@ class AudioliciousMigrationModule extends AbstractModule {
     bind(classOf[AlbumsPerArtistMining]).in(Scopes.SINGLETON)
     bind(classOf[AlbumsPerGenreMining]).in(Scopes.SINGLETON)
     bind(classOf[ArtistCountMining]).in(Scopes.SINGLETON)
+    bind(classOf[AlbumCountMining]).in(Scopes.SINGLETON)
     bind(classOf[SongCountMining]).in(Scopes.SINGLETON)
   }
 

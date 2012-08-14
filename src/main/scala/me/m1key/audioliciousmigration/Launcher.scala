@@ -11,6 +11,7 @@ import me.m1key.audioliciousmigration.mining.AlbumsPerArtistMining
 import me.m1key.audioliciousmigration.mining.AlbumsPerGenreMining
 import me.m1key.audioliciousmigration.mining.ArtistCountMining
 import me.m1key.audioliciousmigration.mining.SongCountMining
+import me.m1key.audioliciousmigration.mining.AlbumCountMining
 
 object Launcher {
 
@@ -28,6 +29,7 @@ object Launcher {
     val albumsPerArtistMining = injector.getInstance(classOf[AlbumsPerArtistMining])
     val albumsPerGenreMining = injector.getInstance(classOf[AlbumsPerGenreMining])
     val artistCountMining = injector.getInstance(classOf[ArtistCountMining])
+    val albumCountMining = injector.getInstance(classOf[AlbumCountMining])
     val songCountMining = injector.getInstance(classOf[SongCountMining])
 
     persistenceProvider.initialise
@@ -47,15 +49,20 @@ object Launcher {
     
     var artistCount = ""
     artistCountMining.mine() match {
-      case s: Some[Int] => artistCount = "" + s.get
+      case s: Some[_] => artistCount = "" + s.get
       case None => artistCount = "?"
+    }
+    var albumCount = ""
+    albumCountMining.mine() match {
+      case s: Some[_] => albumCount = "" + s.get
+      case None => albumCount = "?"
     }
     var songCount = ""
     songCountMining.mine() match {
-      case s: Some[Int] => songCount = "" + s.get
+      case s: Some[_] => songCount = "" + s.get
       case None => songCount = "?"
     }
-    println("Complete library has [%s] artists, [%s] songs.".format(artistCount, songCount))
+    println("Complete library has [%s] artists, [%s] albums, [%s] songs.".format(artistCount, albumCount, songCount))
     println("Top artists by songs count:")
     println(songsPerArtistMining.mine(10))
     println("Top artists by album count:")

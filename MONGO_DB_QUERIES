@@ -23,3 +23,17 @@ db.MongoDbSong.group(
 	initial: {totalAlbums: 0, albums: {}},
 	reduce: function(obj, prev) { if(prev.albums[obj.albumName] == null){prev.albums[obj.albumName]=true;prev.totalAlbums++;}}
 })
+
+
+3. Number of albums.
+
+db.MongoDbSong.group({
+	key: {artistName: 1, albumName: 1},
+	reduce: function(obj, prev) {
+		if (!obj.hasOwnProperty("key")) {
+			prev.artistName = obj.artistName;
+			prev.albumName = obj.albumName;
+		}
+	},
+	initial: {}
+}).length
