@@ -7,15 +7,10 @@ import com.google.code.morphia.annotations.Index
 
 @Entity
 @Indexes(Array(new Index(value = "name, albumName", unique = true)))
-class MongoDbSong() {
+class MongoDbSong(val name: String, val albumName: String) {
 
   @Id
   var id: ObjectId = _
-  
-  // This cannot be a constructor field, because the index is then not created.
-  var name: String = _
-  
-  var albumName: String = _
   
   override def equals(that: Any) = {
     that match {
