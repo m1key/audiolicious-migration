@@ -28,6 +28,9 @@ class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
     "increase the number of rows by one." in {
       songsCount mustBe 0
       val song = new MongoDbSong("Heathen Child", "Grinderman 2", "Grinderman", "12")
+      song.year = 2010
+      song.songArtistName = "Grinderman"
+      song.genre = "Rock"
       repository.save(song)
       songsCount mustBe 1
     }
@@ -55,13 +58,13 @@ class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
       songsCount mustBe 2
     }
 
-    "fail if duplicate song is inserted." in {
+    "not fail if duplicate song is inserted." in {
       songsCount mustBe 0
       val song1 = new MongoDbSong("When My Baby Comes", "Grinderman 2", "Grinderman", "12")
       repository.save(song1)
       val song2 = new MongoDbSong("When My Baby Comes", "Grinderman 2", "Grinderman", "12")
       song1 mustEqual song2
-      repository.save(song2) must throwA[MongoException]
+      songsCount mustBe 1
     }
 
     "insert two songs with same title, different albums." in {
