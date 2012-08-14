@@ -1,9 +1,16 @@
 Sample Mongo DB queries
 
-1. Number of songs by artist.
+1. Number of songs by artist (different forms).
 
 db.MongoDbSong.group(
 	{key: {artistName: true},
 	initial: {totalSongs: 0},
 	reduce: function(obj, prev) { prev.totalSongs++;}
 })
+
+"group" : {
+	ns: "MongoDbSong",
+	key: {artistName: true},
+	initial: {totalSongs: 0},
+	$reduce: function(obj, prev) { prev.totalSongs++;}
+}

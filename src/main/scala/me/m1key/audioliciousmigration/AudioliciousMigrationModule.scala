@@ -15,6 +15,7 @@ import me.m1key.audioliciousmigration.repository.MorphiaMongoDbRepository
 import me.m1key.audioliciousmigration.repository.SongRepository
 import me.m1key.audioliciousmigration.repository.PersistenceSongRepository
 import me.m1key.audioliciousmigration.persistence.mongodb.ProductionMorphiaMongoDbPersistenceProvider
+import me.m1key.audioliciousmigration.mining.SongPerArtistMining
 
 class AudioliciousMigrationModule extends AbstractModule {
 
@@ -29,6 +30,8 @@ class AudioliciousMigrationModule extends AbstractModule {
     bind(classOf[MorphiaMongoDbPersistenceProvider]).to(classOf[ProductionMorphiaMongoDbPersistenceProvider]) in (Scopes.SINGLETON)
     bind(classOf[MorphiaMongoDbRepository]).in(Scopes.SINGLETON)
     bind(classOf[MongoDbExporter]).in(Scopes.SINGLETON)
+    
+    bind(classOf[SongPerArtistMining]).in(Scopes.SINGLETON)
   }
 
 }

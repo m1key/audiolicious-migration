@@ -5,6 +5,7 @@ import me.m1key.audiolicious.domain.entities.Library
 import com.google.inject.Injector
 import me.m1key.audioliciousmigration.repository.LibraryRepository
 import me.m1key.audioliciousmigration.persistence.mongodb.MorphiaMongoDbPersistenceProvider
+import me.m1key.audioliciousmigration.mining.SongPerArtistMining
 
 object Launcher {
 
@@ -16,6 +17,8 @@ object Launcher {
     val persistenceProvider = injector.getInstance(classOf[AudioliciousPersistenceProvider])
     val libraryRepository = injector.getInstance(classOf[LibraryRepository])
     val mongoDbPersistence = injector.getInstance(classOf[MorphiaMongoDbPersistenceProvider])
+    
+    val songsPerArtistMining = injector.getInstance(classOf[SongPerArtistMining])
 
     persistenceProvider.initialise
     val entityManager = persistenceProvider.getEntityManager
@@ -29,6 +32,11 @@ object Launcher {
 
     entityManager.getTransaction().commit
     persistenceProvider.close
+    
+    println("Library imported.")
+    
+    println("Top artists by songs count:")
+    println(songsPerArtistMining.mine(10))
 
     println("Bye.")
   }
