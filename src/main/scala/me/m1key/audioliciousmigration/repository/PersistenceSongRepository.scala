@@ -27,10 +27,16 @@ class PersistenceSongRepository @Inject() (private val persistenceProvider: Audi
       val skipCount = Integer.parseInt(cols(2).toString())
       val songUuid = cols(3).toString()
       val songName = cols(4).toString()
-      val songGenre = cols(5).toString()
+      var songGenre = ""
+      if (cols(5) != null) {
+        songGenre = cols(5).toString()
+      }
       val songYear = Integer.parseInt(cols(6).toString())
       val songArtistName = cols(7).toString()
-      val albumName = cols(8).toString()
+      var albumName = ""
+      if (cols(8) != null) {
+        albumName = cols(8).toString()
+      }
       val artistName = cols(9).toString()
       val songKey = cols(10).toString()
       songTos += new SongTo(songUuid, songName, songGenre, albumName, songArtistName, artistName, playCount, skipCount, percentage, songYear, songKey)
