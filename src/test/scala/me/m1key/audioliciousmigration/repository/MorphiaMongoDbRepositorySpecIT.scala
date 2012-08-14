@@ -29,6 +29,7 @@ class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
       songsCount mustBe 0
       val song = new MongoDbSong
       song.name = "Heathen Child"
+      song.albumName = "Grinderman 2"
       repository.save(song)
       songsCount mustBe 1
     }
@@ -51,9 +52,11 @@ class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
       songsCount mustBe 0
       val song1 = new MongoDbSong
       song1.name = "Heathen Child"
+      song1.albumName = "Grinderman 2"
       repository.save(song1)
       val song2 = new MongoDbSong
       song2.name = "Worm Tamer"
+      song2.albumName = "Grinderman 2"
       repository.save(song2)
       songsCount mustBe 2
     }
@@ -62,11 +65,27 @@ class MorphiaMongoDbRepositorySpecIT extends Specification with JUnit {
       songsCount mustBe 0
       val song1 = new MongoDbSong
       song1.name = "When My Baby Comes"
+      song1.albumName = "Grinderman 2"
       repository.save(song1)
       val song2 = new MongoDbSong
       song2.name = "When My Baby Comes"
+      song2.albumName = "Grinderman 2"
       song1 mustEqual song2
       repository.save(song2) must throwA[MongoException]
+    }
+
+    "insert two songs with same title, different albums." in {
+      songsCount mustBe 0
+      val song1 = new MongoDbSong
+      song1.name = "When My Baby Comes"
+      song1.albumName = "Grinderman 2"
+      repository.save(song1)
+      val song2 = new MongoDbSong
+      song2.name = "When My Baby Comes"
+      song2.albumName = "Grinderman II"
+      song1 must not(beEqual(song2))
+      repository.save(song2)
+      songsCount mustBe 2
     }
 
     doLast {
