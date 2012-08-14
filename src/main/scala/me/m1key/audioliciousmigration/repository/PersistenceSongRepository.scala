@@ -11,7 +11,7 @@ class PersistenceSongRepository @Inject() (private val persistenceProvider: Audi
   def getAllSongsWithStatsByLibraryUuid(libraryUuid: String): Iterable[SongTo] = {
     val entityManager = persistenceProvider.getEntityManager
     val songs = entityManager.createNativeQuery("select st.PLAY_COUNT, st.PERCENTAGE, st.SKIP_COUNT, st.SONG_UUID, " +
-      "so.NAME, so.GENRE, so.YEAR, so.ARTIST_NAME, al.NAME, ar.NAME " +
+      "so.NAME, so.GENRE, so.YEAR, so.ARTIST_NAME, al.NAME, ar.NAME, so.SONG_KEY " +
       "from STATS st left join LIBRARIES l ON st.library_id = l.library_id " +
       "left join SONGS so on st.SONG_UUID = so.UUID " +
       "left join ALBUMS al on so.ALBUM_ID = al.ALBUM_ID " +
@@ -32,7 +32,8 @@ class PersistenceSongRepository @Inject() (private val persistenceProvider: Audi
       val songArtistName = cols(7).toString()
       val albumName = cols(8).toString()
       val artistName = cols(9).toString()
-      songTos += new SongTo(songUuid, songName, songGenre, albumName, songArtistName, artistName, playCount, skipCount, percentage, songYear)
+      val songKey = cols(10).toString()
+      songTos += new SongTo(songUuid, songName, songGenre, albumName, songArtistName, artistName, playCount, skipCount, percentage, songYear, songKey)
     }
 
     return songTos

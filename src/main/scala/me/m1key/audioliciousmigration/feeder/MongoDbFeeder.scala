@@ -12,7 +12,7 @@ private[audioliciousmigration] class MongoDbFeeder @Inject() (private val export
     val songs = songRepository.getAllSongsWithStatsByLibraryUuid(library.getUuid());
     println("Obtained [%d] songs.".format(songs.size))
     for (song <- songs) {
-      val mongoDbSong = new MongoDbSong(song.songName, song.albumName, song.artistName)
+      val mongoDbSong = new MongoDbSong(song.songName, song.albumName, song.artistName, song.songKey)
       exporter.export(mongoDbSong)
     }
   }

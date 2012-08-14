@@ -6,8 +6,8 @@ import com.google.code.morphia.annotations.Indexes
 import com.google.code.morphia.annotations.Index
 
 @Entity
-@Indexes(Array(new Index(value = "name, albumName, artistName", unique = true)))
-class MongoDbSong(val name: String, val albumName: String, val artistName: String) {
+@Indexes(Array(new Index(value = "name, albumName, artistName, songKey", unique = true)))
+class MongoDbSong(val name: String, val albumName: String, val artistName: String, val songKey: String) {
 
   @Id
   var id: ObjectId = _
@@ -15,7 +15,8 @@ class MongoDbSong(val name: String, val albumName: String, val artistName: Strin
   override def equals(that: Any) = {
     that match {
       case that: MongoDbSong => that.name == this.name &&
-    		  that.albumName == this.albumName && that.artistName == this.artistName
+    		  that.albumName == this.albumName && that.artistName == this.artistName &&
+    		  that.songKey == this.songKey
       case _ => false
     }
   }
