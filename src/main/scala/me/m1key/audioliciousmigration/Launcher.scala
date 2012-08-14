@@ -8,6 +8,7 @@ import me.m1key.audioliciousmigration.persistence.mongodb.MorphiaMongoDbPersiste
 import me.m1key.audioliciousmigration.mining.SongPerArtistMining
 import me.m1key.audioliciousmigration.mining.SongPerYearMining
 import me.m1key.audioliciousmigration.mining.AlbumsPerArtistMining
+import me.m1key.audioliciousmigration.mining.AlbumsPerGenreMining
 
 object Launcher {
 
@@ -23,6 +24,7 @@ object Launcher {
     val songsPerArtistMining = injector.getInstance(classOf[SongPerArtistMining])
     val songsPerYearMining = injector.getInstance(classOf[SongPerYearMining])
     val albumsPerArtistMining = injector.getInstance(classOf[AlbumsPerArtistMining])
+    val albumsPerGenreMining = injector.getInstance(classOf[AlbumsPerGenreMining])
 
     persistenceProvider.initialise
     val entityManager = persistenceProvider.getEntityManager
@@ -47,6 +49,8 @@ object Launcher {
     println(songsPerYearMining.mineTop(10))
     println("Bottom years by songs count:")
     println(songsPerYearMining.mineBottom(10))
+    println("Albums by genre count:")
+    println(albumsPerGenreMining.mine())
 
     println("Bye.")
   }
