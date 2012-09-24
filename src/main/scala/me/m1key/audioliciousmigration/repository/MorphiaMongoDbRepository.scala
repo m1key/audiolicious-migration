@@ -19,6 +19,7 @@ class MorphiaMongoDbRepository @Inject() (private val persistenceProvider: Morph
     
     if (existingSong != null) {
       var ops = datastore.createUpdateOperations(classOf[MongoDbSong])
+      
       if (song.genre != null) {
         ops = ops.set("genre", song.genre)
       }
@@ -28,6 +29,10 @@ class MorphiaMongoDbRepository @Inject() (private val persistenceProvider: Morph
       if (song.songArtistName != null) {
         ops = ops.set("songArtistName", song.songArtistName)
       }
+      if (!existingSong.containsStatsForLibraryUuid(song.statsList.get(0).libraryUuid)) {
+        ops.add("statsList", song.statsList.get(0))
+      }
+      
       val updatedCount = datastore.update(selectQuery, ops).getUpdatedCount()
 
       if (updatedCount != 1) {
