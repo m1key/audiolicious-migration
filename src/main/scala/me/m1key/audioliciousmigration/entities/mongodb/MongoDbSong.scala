@@ -9,6 +9,11 @@ import com.google.code.morphia.annotations.Index
 @Indexes(Array(new Index(value = "name, albumName, artistName, songKey", unique = true)))
 class MongoDbSong(val name: String, val albumName: String, val artistName: String, val songKey: String) {
 
+  // No-args constructor to be used by Morphia.
+  def this() {
+    this("name to be set", "albumName to be set", "artistName to be set", "songKey to be set")
+  }
+  
   @Id
   var id: ObjectId = _
   
