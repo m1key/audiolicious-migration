@@ -17,7 +17,7 @@ private[audioliciousmigration] class MongoDbFeeder @Inject() (private val export
       mongoDbSong.year = song.songYear
       mongoDbSong.songArtistName = song.songArtistName
       
-      mongoDbSong.addStats(library.getUuid())
+      mongoDbSong.addOrEditStats(library.getUuid())
       
       exporter.export(mongoDbSong)
     }

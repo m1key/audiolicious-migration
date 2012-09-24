@@ -2,7 +2,7 @@ package me.m1key.audioliciousmigration.entities.mongodb;
 import com.google.code.morphia.annotations.Embedded
 
 @Embedded
-class MongoDbStats(val libraryUuid: String) {
+class MongoDbStats(var libraryUuid: String) {
 
 	  // No-args constructor to be used by Morphia.
 	  def this() {

@@ -43,7 +43,7 @@ class MongoDbSong(val name: String, val albumName: String, val artistName: Strin
     return None
   }
   
-  def addStats(libraryUuid: String): Unit = {
+  def addOrEditStats(libraryUuid: String): Unit = {
     if (containsStatsForLibraryUuid(libraryUuid)) {
     getStatsForLibraryUuid(libraryUuid) match {
       case Some(x) => //  TODO update x
