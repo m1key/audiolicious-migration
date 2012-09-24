@@ -30,10 +30,9 @@ class MorphiaMongoDbRepository @Inject() (private val persistenceProvider: Morph
         ops = ops.set("songArtistName", song.songArtistName)
       }
 
-      val statLibrary = song.statsList.get(0)
-      val statLibraryUuid = statLibrary.libraryUuid
-      existingSong.addOrEditStats(statLibrary.libraryUuid)
-      ops.set("statsList", song.statsList)
+      val stat = song.statsList.get(0)
+      existingSong.addOrEditStats(stat.libraryUuid, stat.percentage)
+      ops.set("statsList", existingSong.statsList)
 
       val updatedCount = datastore.update(selectQuery, ops).getUpdatedCount()
 
