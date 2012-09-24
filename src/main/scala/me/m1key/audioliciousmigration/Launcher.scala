@@ -12,6 +12,8 @@ import me.m1key.audioliciousmigration.mining.AlbumsPerGenreMining
 import me.m1key.audioliciousmigration.mining.ArtistCountMining
 import me.m1key.audioliciousmigration.mining.SongCountMining
 import me.m1key.audioliciousmigration.mining.AlbumCountMining
+import me.m1key.audioliciousmigration.mining.SongPlayCountMining
+import me.m1key.audioliciousmigration.entities.mongodb.MongoDbSong
 
 object Launcher {
 
@@ -31,6 +33,7 @@ object Launcher {
     val artistCountMining = injector.getInstance(classOf[ArtistCountMining])
     val albumCountMining = injector.getInstance(classOf[AlbumCountMining])
     val songCountMining = injector.getInstance(classOf[SongCountMining])
+    val songPlayCountMining = injector.getInstance(classOf[SongPlayCountMining])
 
     persistenceProvider.initialise
     val entityManager = persistenceProvider.getEntityManager
@@ -73,6 +76,8 @@ object Launcher {
     println(songsPerYearMining.mineBottom(10))
     println("Albums by genre count:")
     println(albumsPerGenreMining.mine())
+    println("Top songs by play count:")
+    printlnSongsWithPlayCount(songPlayCountMining.mine(10), library.getUuid)
 
     println("Bye.")
   }
@@ -92,6 +97,11 @@ object Launcher {
         case None => throw new RuntimeException("There are no libraries in the database.")
       }
     }
+  }
+  
+  def printlnSongsWithPlayCount(songs: List[MongoDbSong], libraryUuid: String): Unit = {
+    songs.indices.foreach(i => print("%d. %s (%d, %s).  ".format(i+1, songs(i).name, songs(i).getStatsForLibraryUuid(libraryUuid).get.playCount, songs(i).songArtistName)))
+    println
   }
 
 }
