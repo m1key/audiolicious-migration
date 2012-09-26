@@ -10,7 +10,7 @@ class SongSkipCountMining @Inject() (private val persistenceProvider: MorphiaMon
 
   def mine(limit: Int): List[MongoDbSong] = {
     val query = persistenceProvider.getDatastore().createQuery(classOf[MongoDbSong]).order("-statsList.skipCount").limit(limit);
-    return asScalaIterable(query.fetch()).toList
+    return iterableAsScalaIterable(query.fetch()).toList
   }
 
 }
