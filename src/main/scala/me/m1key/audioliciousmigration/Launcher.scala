@@ -15,6 +15,7 @@ import me.m1key.audioliciousmigration.mining.AlbumCountMining
 import me.m1key.audioliciousmigration.mining.SongPlayCountMining
 import me.m1key.audioliciousmigration.entities.mongodb.MongoDbSong
 import me.m1key.audioliciousmigration.mining.SongSkipCountMining
+import me.m1key.audioliciousmigration.entities.mongodb.MongoDbStats
 
 object Launcher {
 
@@ -79,9 +80,9 @@ object Launcher {
     println("Albums by genre count:")
     println(albumsPerGenreMining.mine())
     println("Top songs by play count:")
-    printlnSongsWithPlayCount(songPlayCountMining.mine(10), library.getUuid)
+    printlnSongs(songPlayCountMining.mine(10), library.getUuid, playCount)
     println("Top songs by skip count:")
-    printlnSongsWithSkipCount(songSkipCountMining.mine(10), library.getUuid)
+    printlnSongs(songSkipCountMining.mine(10), library.getUuid, skipCount)
 
     println("Bye.")
   }
@@ -103,13 +104,11 @@ object Launcher {
     }
   }
   
-  def printlnSongsWithPlayCount(songs: List[MongoDbSong], libraryUuid: String): Unit = {
-    songs.indices.foreach(i => print("%d. %s (%d, %s).  ".format(i+1, songs(i).name, songs(i).getStatsForLibraryUuid(libraryUuid).get.playCount, songs(i).songArtistName)))
-    println
-  }
+  def skipCount(stats: MongoDbStats) = "" + stats.skipCount
+  def playCount(stats: MongoDbStats) = "" + stats.playCount
   
-  def printlnSongsWithSkipCount(songs: List[MongoDbSong], libraryUuid: String): Unit = {
-    songs.indices.foreach(i => print("%d. %s (%d, %s).  ".format(i+1, songs(i).name, songs(i).getStatsForLibraryUuid(libraryUuid).get.skipCount, songs(i).songArtistName)))
+  def printlnSongs(songs: List[MongoDbSong], libraryUuid: String, f: (MongoDbStats) => String): Unit = {
+    songs.indices.foreach(i => print("%d. %s (%s, %s).  ".format(i+1, songs(i).name, f(songs(i).getStatsForLibraryUuid(libraryUuid).get), songs(i).songArtistName)))
     println
   }
 
