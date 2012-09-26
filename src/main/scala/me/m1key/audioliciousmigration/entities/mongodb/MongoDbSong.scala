@@ -43,16 +43,17 @@ class MongoDbSong(val name: String, val albumName: String, val artistName: Strin
     return None
   }
 
-  def addOrEditStats(libraryUuid: String, percentage: Int, playCount: Int): Unit = {
+  def addOrEditStats(libraryUuid: String, percentage: Int, playCount: Int, skipCount: Int): Unit = {
     if (containsStatsForLibraryUuid(libraryUuid)) {
       getStatsForLibraryUuid(libraryUuid) match {
         case Some(x) =>
           x.percentage = percentage
           x.playCount = playCount
+          x.skipCount = skipCount
         case None => throw new RuntimeException("Stats for library [%s] not found in song [%s]. This is a bug.".format(libraryUuid, name))
       }
     } else {
-      statsList.add(new MongoDbStats(libraryUuid, percentage, playCount))
+      statsList.add(new MongoDbStats(libraryUuid, percentage, playCount, skipCount))
     }
   }
 
