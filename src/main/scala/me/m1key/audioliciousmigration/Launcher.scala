@@ -80,9 +80,9 @@ object Launcher {
     println("Albums by genre count:")
     println(albumsPerGenreMining.mine())
     println("Top songs by play count:")
-    printlnSongs(songPlayCountMining.mine(10), library.getUuid, playCount)
+    printlnSongs(songPlayCountMining.mine(10, library.getUuid), library.getUuid, playCount)
     println("Top songs by skip count:")
-    printlnSongs(songSkipCountMining.mine(10), library.getUuid, skipCount)
+    printlnSongs(songSkipCountMining.mine(10, library.getUuid), library.getUuid, skipCount)
 
     println("Bye.")
   }

@@ -8,8 +8,8 @@ import scala.collection.JavaConversions._
 
 class SongPlayCountMining @Inject() (private val persistenceProvider: MorphiaMongoDbPersistenceProvider) {
 
-  def mine(limit: Int): List[MongoDbSong] = {
-    val query = persistenceProvider.getDatastore().createQuery(classOf[MongoDbSong]).order("-statsList.playCount").limit(limit);
+  def mine(limit: Int, libraryUuid: String): List[MongoDbSong] = {
+    val query = persistenceProvider.getDatastore().createQuery(classOf[MongoDbSong]).order("-statsList.playCount").filter("statsList.libraryUuid", libraryUuid).limit(limit);
     return iterableAsScalaIterable(query.fetch()).toList
   }
 
