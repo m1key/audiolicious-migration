@@ -46,3 +46,15 @@ db.MongoDbSong.group(
 	initial: {totalPlays: 0},
 	reduce: function(obj, prev) { for(var i=0; i < obj.statsList.length; i++) { if(obj.statsList[i].libraryUuid == 'bf25ff51-da26-4c76-82dc-ada0e4a68c18'){ prev.totalPlays += obj.statsList[i].playCount}}}
 })
+
+or
+
+
+5. Most played albums average per song.
+
+db.MongoDbSong.group(
+	{key: {artistName: 1, albumName: 1},
+	initial: {totalPlays: 0, totalSongs: 0, totalPlaysPerSong: 0},
+	reduce: function(obj, prev) {for each (var item in obj.statsList) if(item.libraryUuid == 'bf25ff51-da26-4c76-82dc-ada0e4a68c18' && prev.totalSongs++){ prev.totalPlays += item.playCount}},
+	finalize: function(prev) {prev.totalPlaysPerSong = prev.totalPlays / prev.totalSongs}
+  })
