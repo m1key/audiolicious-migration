@@ -2,7 +2,7 @@ apply plugin: 'scala'
 apply plugin: 'maven'
 
 sourceCompatibility = 1.7
-version = '0.0.3'
+version = '0.0.4-SNAPSHOT'
 group = 'me.m1key.audiolicious-migration'
 
 jar {
