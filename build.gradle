@@ -39,7 +39,7 @@ dependencies {
 	compile group: 'org.eclipse.persistence', name: 'eclipselink', version: '2.4.0'
 	compile group: 'org.eclipse.persistence', name: 'javax.persistence', version: '2.0.0'
 	compile group: 'mysql', name: 'mysql-connector-java', version: '5.1.21'
-	compile group: 'org.mongodb', name: 'mongo-java-driver', version: '2.7.3'
+	compile group: 'org.mongodb', name: 'mongo-java-driver', version: '2.9.1'
 	compile group: 'com.google.code.morphia', name: 'morphia', version: '0.99'
 
 	testCompile group: 'org.scala-tools.testing', name: 'specs_2.9.1', version: '1.6.9'
