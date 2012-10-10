@@ -58,3 +58,13 @@ db.MongoDbSong.group(
 	reduce: function(obj, prev) {for each (var item in obj.statsList) if(item.libraryUuid == 'bf25ff51-da26-4c76-82dc-ada0e4a68c18' && prev.totalSongs++){ prev.totalPlays += item.playCount}},
 	finalize: function(prev) {prev.totalPlaysPerSong = prev.totalPlays / prev.totalSongs}
   })
+
+
+6. Best rated albums.
+
+db.MongoDbSong.group(
+	{key: {artistName: 1, albumName: 1},
+	initial: {totalRatings: 0, totalSongs: 0, totalRatingPerAlbum: 0},
+	reduce: function(obj, prev) {for each (var item in obj.statsList) if(item.libraryUuid == 'bf25ff51-da26-4c76-82dc-ada0e4a68c18' && ++prev.totalSongs){ prev.totalRatings += item.percentage}},
+	finalize: function(prev) {prev.totalRatingPerAlbum = prev.totalRatings / prev.totalSongs}
+  })
