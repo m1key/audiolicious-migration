@@ -19,6 +19,7 @@ import me.m1key.audioliciousmigration.mining.MostPlayedAlbumsMining
 import me.m1key.audioliciousmigration.entities.mongodb.MongoDbStats
 import me.m1key.audioliciousmigration.mining.MostPlayedAlbumsPerSongMining
 import me.m1key.audioliciousmigration.mining.HighestRatedAlbumMining
+import me.m1key.audioliciousmigration.mining.LowestRatedAlbumMining
 
 object Launcher {
 
@@ -43,6 +44,8 @@ object Launcher {
     val mostPlayedAlbumsMining = injector.getInstance(classOf[MostPlayedAlbumsMining])
     val mostPlayedAlbumsPerSongMining = injector.getInstance(classOf[MostPlayedAlbumsPerSongMining])
     val highestRatedAlbumMining = injector.getInstance(classOf[HighestRatedAlbumMining])
+    val lowestRatedAlbumMining = injector.getInstance(classOf[LowestRatedAlbumMining])
+
 
     persistenceProvider.initialise
     val entityManager = persistenceProvider.getEntityManager
@@ -95,6 +98,8 @@ object Launcher {
     println(mostPlayedAlbumsPerSongMining.mine(10, library.getUuid))
     println("Highest rated albums:")
     println(highestRatedAlbumMining.mine(10, library.getUuid))
+    println("Lowest rated albums:")
+    println(lowestRatedAlbumMining.mine(10, library.getUuid))
 
     println("Bye.")
   }
