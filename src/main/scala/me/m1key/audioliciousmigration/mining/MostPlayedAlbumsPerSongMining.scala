@@ -17,7 +17,7 @@ class MostPlayedAlbumsPerSongMining @Inject() (private val persistenceProvider: 
   private val query = "db.MongoDbSong.group(" +
 	"{key: {artistName: 1, albumName: 1}," +
 	"initial: {totalPlays: 0, totalSongs: 0, totalPlaysPerSong: 0}," +
-	"reduce: function(obj, prev) {for each (var item in obj.statsList) if(item.libraryUuid == '%s' && prev.totalSongs++){ prev.totalPlays += item.playCount}}," +
+	"reduce: function(obj, prev) {for each (var item in obj.statsList) if(item.libraryUuid == '%s' && ++prev.totalSongs){ prev.totalPlays += item.playCount}}," +
 	"finalize: function(prev) {prev.totalPlaysPerSong = prev.totalPlays / prev.totalSongs}" +
   "})";
   
