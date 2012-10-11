@@ -21,6 +21,7 @@ import me.m1key.audioliciousmigration.mining.MostPlayedAlbumsPerSongMining
 import me.m1key.audioliciousmigration.mining.HighestRatedAlbumMining
 import me.m1key.audioliciousmigration.mining.LowestRatedAlbumMining
 import me.m1key.audioliciousmigration.mining.HighestRatedGenreMining
+import me.m1key.audioliciousmigration.mining.HighestRatedArtistMining
 
 object Launcher {
 
@@ -32,7 +33,7 @@ object Launcher {
     val persistenceProvider = injector.getInstance(classOf[AudioliciousPersistenceProvider])
     val libraryRepository = injector.getInstance(classOf[LibraryRepository])
     val mongoDbPersistence = injector.getInstance(classOf[MorphiaMongoDbPersistenceProvider])
-    
+
     val songsPerArtistMining = injector.getInstance(classOf[SongPerArtistMining])
     val songsPerYearMining = injector.getInstance(classOf[SongPerYearMining])
     val albumsPerArtistMining = injector.getInstance(classOf[AlbumsPerArtistMining])
@@ -47,7 +48,7 @@ object Launcher {
     val highestRatedAlbumMining = injector.getInstance(classOf[HighestRatedAlbumMining])
     val lowestRatedAlbumMining = injector.getInstance(classOf[LowestRatedAlbumMining])
     val highestRatedGenreMining = injector.getInstance(classOf[HighestRatedGenreMining])
-
+    val highestRatedArtistMining = injector.getInstance(classOf[HighestRatedArtistMining])
 
     persistenceProvider.initialise
     val entityManager = persistenceProvider.getEntityManager
@@ -61,9 +62,9 @@ object Launcher {
 
     entityManager.getTransaction().commit
     persistenceProvider.close
-    
+
     println("Library imported.")
-    
+
     var artistCount = ""
     artistCountMining.mine() match {
       case s: Some[_] => artistCount = "" + s.get
@@ -104,6 +105,8 @@ object Launcher {
     println(lowestRatedAlbumMining.mine(10, library.getUuid))
     println("Highest rated genres:")
     println(highestRatedGenreMining.mine(library.getUuid))
+    println("Highest rated artists:")
+    println(highestRatedArtistMining.mine(10, library.getUuid))
 
     println("Bye.")
   }
@@ -124,12 +127,12 @@ object Launcher {
       }
     }
   }
-  
+
   def skipCount(stats: MongoDbStats) = "" + stats.skipCount
   def playCount(stats: MongoDbStats) = "" + stats.playCount
-  
+
   def printlnSongs(songs: List[MongoDbSong], libraryUuid: String, f: (MongoDbStats) => String): Unit = {
-    songs.indices.foreach(i => print("%d. %s (%s, %s).  ".format(i+1, songs(i).name, f(songs(i).getStatsForLibraryUuid(libraryUuid).get), songs(i).songArtistName)))
+    songs.indices.foreach(i => print("%d. %s (%s, %s).  ".format(i + 1, songs(i).name, f(songs(i).getStatsForLibraryUuid(libraryUuid).get), songs(i).songArtistName)))
     println
   }
 
