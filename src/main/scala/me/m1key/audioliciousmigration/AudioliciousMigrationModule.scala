@@ -30,6 +30,8 @@ import me.m1key.audioliciousmigration.mining.HighestRatedAlbumMining
 import me.m1key.audioliciousmigration.mining.LowestRatedAlbumMining
 import me.m1key.audioliciousmigration.mining.HighestRatedGenreMining
 import me.m1key.audioliciousmigration.mining.HighestRatedArtistMining
+import me.m1key.audioliciousmigration.mining.LowestRatedArtistMining
+import me.m1key.audioliciousmigration.mining.HighestPlayCountContrastAlbumMining
 
 class AudioliciousMigrationModule extends AbstractModule {
 
@@ -60,6 +62,8 @@ class AudioliciousMigrationModule extends AbstractModule {
     bind(classOf[LowestRatedAlbumMining]).in(Scopes.SINGLETON)
     bind(classOf[HighestRatedGenreMining]).in(Scopes.SINGLETON)
     bind(classOf[HighestRatedArtistMining]).in(Scopes.SINGLETON)
+    bind(classOf[LowestRatedArtistMining]).in(Scopes.SINGLETON)
+    bind(classOf[HighestPlayCountContrastAlbumMining]).in(Scopes.SINGLETON)
   }
 
 }
