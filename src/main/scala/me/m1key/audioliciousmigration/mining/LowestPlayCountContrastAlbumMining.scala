@@ -9,8 +9,7 @@ import java.text.NumberFormat
 import java.text.ParsePosition
 import java.util.Locale
 
-
-class HighestPlayCountContrastAlbumMining @Inject() (private val persistenceProvider: MorphiaMongoDbPersistenceProvider) {
+class LowestPlayCountContrastAlbumMining @Inject() (private val persistenceProvider: MorphiaMongoDbPersistenceProvider) {
 
   // This is a hack.
   // It won't allow two statements in the reduce call.
@@ -40,7 +39,7 @@ class HighestPlayCountContrastAlbumMining @Inject() (private val persistenceProv
     return processResults(list).sortWith(compareThirdValueInteger).slice(0, maxResults)
   }
 
-  def compareThirdValueInteger(e1: (String, String, Double), e2: (String, String, Double)) = e1._3 > e2._3
+  def compareThirdValueInteger(e1: (String, String, Double), e2: (String, String, Double)) = e1._3 < e2._3
   
   private def processResults(list: BasicDBList): List[(String, String, Double)] = {
     var results : List[(String, String, Double)] = List()

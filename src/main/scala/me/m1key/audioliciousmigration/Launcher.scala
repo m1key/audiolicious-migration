@@ -24,6 +24,8 @@ import me.m1key.audioliciousmigration.mining.HighestRatedGenreMining
 import me.m1key.audioliciousmigration.mining.HighestRatedArtistMining
 import me.m1key.audioliciousmigration.mining.LowestRatedArtistMining
 import me.m1key.audioliciousmigration.mining.HighestPlayCountContrastAlbumMining
+import me.m1key.audioliciousmigration.mining.LowestPlayCountContrastAlbumMining
+import me.m1key.audioliciousmigration.mining.LowestPlayCountContrastAlbumMining
 
 object Launcher {
 
@@ -53,6 +55,7 @@ object Launcher {
     val highestRatedArtistMining = injector.getInstance(classOf[HighestRatedArtistMining])
     val lowestRatedArtistMining = injector.getInstance(classOf[LowestRatedArtistMining])
     val highestPlayCountContrastAlbumMining = injector.getInstance(classOf[HighestPlayCountContrastAlbumMining])
+    val lowestPlayCountContrastAlbumMining = injector.getInstance(classOf[LowestPlayCountContrastAlbumMining])
 
     persistenceProvider.initialise
     val entityManager = persistenceProvider.getEntityManager
@@ -115,6 +118,8 @@ object Launcher {
     println(lowestRatedArtistMining.mine(10, library.getUuid))
     println("Highest play count contrast albums:")
     println(highestPlayCountContrastAlbumMining.mine(10, library.getUuid))
+    println("Lowest play count contrast albums:")
+    println(lowestPlayCountContrastAlbumMining.mine(10, library.getUuid))
 
     println("Bye.")
   }
