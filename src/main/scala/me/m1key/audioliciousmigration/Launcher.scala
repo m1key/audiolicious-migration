@@ -20,6 +20,7 @@ import me.m1key.audioliciousmigration.entities.mongodb.MongoDbStats
 import me.m1key.audioliciousmigration.mining.MostPlayedAlbumsPerSongMining
 import me.m1key.audioliciousmigration.mining.HighestRatedAlbumMining
 import me.m1key.audioliciousmigration.mining.LowestRatedAlbumMining
+import me.m1key.audioliciousmigration.mining.HighestRatedGenreMining
 
 object Launcher {
 
@@ -45,6 +46,7 @@ object Launcher {
     val mostPlayedAlbumsPerSongMining = injector.getInstance(classOf[MostPlayedAlbumsPerSongMining])
     val highestRatedAlbumMining = injector.getInstance(classOf[HighestRatedAlbumMining])
     val lowestRatedAlbumMining = injector.getInstance(classOf[LowestRatedAlbumMining])
+    val highestRatedGenreMining = injector.getInstance(classOf[HighestRatedGenreMining])
 
 
     persistenceProvider.initialise
@@ -100,6 +102,8 @@ object Launcher {
     println(highestRatedAlbumMining.mine(10, library.getUuid))
     println("Lowest rated albums:")
     println(lowestRatedAlbumMining.mine(10, library.getUuid))
+    println("Highest rated genres:")
+    println(highestRatedGenreMining.mine(library.getUuid))
 
     println("Bye.")
   }
