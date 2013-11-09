@@ -16,7 +16,7 @@ class MostPlayedAlbumsMining @Inject() (private val persistenceProvider: Morphia
   private val query = "db.MongoDbSong.group(" +
 	"{key: {artistName: 1, albumName: 1}," +
 	"initial: {totalPlays: 0}," +
-	"reduce: function(obj, prev) {for each (var item in obj.statsList) if(item.libraryUuid == '%s'){ prev.totalPlays += item.playCount}}" +
+	"reduce: function(obj, prev) {obj.statsList.forEach(function(entry){if(entry.libraryUuid == '%s'){ prev.totalPlays += entry.playCount}})}" +
   "})";
   
   private val formatter = NumberFormat.getInstance(Locale.ENGLISH)

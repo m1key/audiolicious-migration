@@ -13,7 +13,7 @@ class SongPerYearMining @Inject() (private val persistenceProvider: MorphiaMongo
   private val query = "db.MongoDbSong.group("+
 	"{key: {year: true},"+
 	"initial: {totalSongs: 0},"+
-	"reduce: function(obj, prev) { prev.totalSongs++;}"+
+	"reduce: function(obj, prev) { prev.totalSongs++}"+
 	"})";
   
   private val formatter = NumberFormat.getInstance(Locale.ENGLISH)
@@ -34,7 +34,7 @@ class SongPerYearMining @Inject() (private val persistenceProvider: MorphiaMongo
     val result = mongo.getDB("audiolicious").eval(query)
     result match {
       case list: BasicDBList => return Some(processAndRetrieveResults(list, maxResults, compareSecondValueIntegerBottomTop))
-      case _ => println("Error while obtaining stats. Result of unknown type [%s].".format(result.getClass()))
+      case _ => println("Error while obtaining stats. Result of unknown type [%s].".format(result))
       	return None;
     }
   }

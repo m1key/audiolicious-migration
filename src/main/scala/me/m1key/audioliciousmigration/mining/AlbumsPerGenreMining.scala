@@ -17,7 +17,7 @@ class AlbumsPerGenreMining @Inject() (private val persistenceProvider: MorphiaMo
   private val query = "db.MongoDbSong.group(" +
 	"{key: {genre: true}," +
 	"initial: {totalAlbums: 0, albums: {}}," +
-	"reduce: function(obj, prev) { if(prev.albums[obj.aristName + '__' + obj.albumName] == null && ++prev.totalAlbums > 0){prev.albums[obj.aristName + '__' + obj.albumName]=true;}}" +
+	"reduce: function(obj, prev) { if(prev.albums[obj.aristName + '__' + obj.albumName] == null && ++prev.totalAlbums > 0){prev.albums[obj.aristName + '__' + obj.albumName]=true}}" +
 	"})";
   
   private val formatter = NumberFormat.getInstance(Locale.ENGLISH)

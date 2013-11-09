@@ -10,7 +10,7 @@ class AlbumCountMining @Inject() (private val persistenceProvider: MorphiaMongoD
 	"key: {artistName: 1, albumName: 1}," +
 	"reduce: function(obj, prev) {" +
 		"if (!obj.hasOwnProperty(\"key\") && (prev.artistName = obj.artistName)) {" +
-			"prev.albumName = obj.albumName;" +
+			"prev.albumName = obj.albumName" +
 		"}" +
 	"}," +
 	"initial: {}" +

@@ -18,7 +18,7 @@ class HighestRatedArtistMining  @Inject() (private val persistenceProvider: Morp
   private val query = "db.MongoDbSong.group(" +
 	"{key: {artistName: 1}," +
 	"initial: {totalRatings: 0, totalSongs: 0, totalRatingPerArtist: 0}," +
-	"reduce: function(obj, prev) {for each (var item in obj.statsList) if(item.libraryUuid == '%s' && ++prev.totalSongs){ prev.totalRatings += item.percentage}}," +
+	"reduce: function(obj, prev) {obj.statsList.forEach(function(item){if(item.libraryUuid == '%s' && ++prev.totalSongs){ prev.totalRatings += item.percentage}})}," +
 	"finalize: function(prev) {prev.totalRatingPerArtist = prev.totalRatings / prev.totalSongs}" +
   "})";
   

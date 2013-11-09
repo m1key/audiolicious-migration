@@ -17,8 +17,8 @@ class LowestPlayCountContrastAlbumMining @Inject() (private val persistenceProvi
   private val query = "db.MongoDbSong.group(" +
 	"{key: {artistName: 1, albumName: 1}," +
 	"initial: {maxPlayed: 0, minPlayed: 2147483647, contrast: 0}," +
-	"reduce: function(obj, prev) {for each (var item in obj.statsList) if(item.libraryUuid == '%s' && " +
-	"  ((item.playCount > prev.maxPlayed && (prev.maxPlayed = item.playCount)) && (item.playCount < prev.minPlayed && (prev.minPlayed = item.playCount)))){}}," +
+	"reduce: function(obj, prev) {obj.statsList.forEach(function(item){if(item.libraryUuid == '%s' && " +
+	"  ((item.playCount > prev.maxPlayed && (prev.maxPlayed = item.playCount)) && (item.playCount < prev.minPlayed && (prev.minPlayed = item.playCount)))){}})}," +
 	"finalize: function(prev) {prev.contrast = (prev.maxPlayed*prev.maxPlayed) - (prev.minPlayed*prev.minPlayed)}" +
   "})";
   

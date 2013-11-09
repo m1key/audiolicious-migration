@@ -18,7 +18,7 @@ class LowestRatedAlbumMining  @Inject() (private val persistenceProvider: Morphi
   private val query = "db.MongoDbSong.group(" +
 	"{key: {artistName: 1, albumName: 1}," +
 	"initial: {totalRatings: 0, totalSongs: 0, totalRatingPerAlbum: 0}," +
-	"reduce: function(obj, prev) {for each (var item in obj.statsList) if(item.libraryUuid == '%s' && ++prev.totalSongs){ prev.totalRatings += item.percentage}}," +
+	"reduce: function(obj, prev) {obj.statsList.forEach(function(item){if(item.libraryUuid == '%s' && ++prev.totalSongs){ prev.totalRatings += item.percentage}})}," +
 	"finalize: function(prev) {prev.totalRatingPerAlbum = prev.totalRatings / prev.totalSongs}" +
   "})";
   

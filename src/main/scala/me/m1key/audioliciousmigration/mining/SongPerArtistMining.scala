@@ -13,7 +13,7 @@ class SongPerArtistMining @Inject() (private val persistenceProvider: MorphiaMon
   private val query = "db.MongoDbSong.group("+
 	"{key: {artistName: true},"+
 	"initial: {totalSongs: 0},"+
-	"reduce: function(obj, prev) { prev.totalSongs++;}"+
+	"reduce: function(obj, prev) { prev.totalSongs++}"+
 	"})";
   
   private val formatter = NumberFormat.getInstance(Locale.ENGLISH)
